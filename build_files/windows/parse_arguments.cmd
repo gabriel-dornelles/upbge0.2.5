@@ -16,7 +16,7 @@ if NOT "%1" == "" (
 		set BUILD_CMAKE_ARGS=%BUILD_CMAKE_ARGS% -DWITH_GAMEENGINE=OFF -DWITH_PLAYER=OFF
 		set BUILD_NGE=_noge
 	) else if "%1" == "builddir" (
-		set BUILD_DIR_OVERRRIDE="%BLENDER_DIR%..\%2"
+		set BUILD_DIR_OVERRRIDE=%BLENDER_DIR%..\%2
 		shift /1
 	) else if "%1" == "with_tests" (
 		set TESTS_CMAKE_ARGS=-DWITH_GTESTS=On
@@ -44,17 +44,15 @@ if NOT "%1" == "" (
 		set TARGET=Release
 	) else if "%1" == "asan" (
 		set WITH_ASAN=1
-	) else if "%1" == "x86" (
-		set BUILD_ARCH=x86
 	) else if "%1" == "x64" (
 		set BUILD_ARCH=x64
-	) else if "%1" == "2017" (
-		set BUILD_VS_YEAR=2017
-	) else if "%1" == "2017pre" (
-		set BUILD_VS_YEAR=2017
+	) else if "%1" == "2022" (
+		set BUILD_VS_YEAR=2022
+	) else if "%1" == "2022pre" (
+		set BUILD_VS_YEAR=2022
 		set VSWHERE_ARGS=-prerelease
-	) else if "%1" == "2017b" (
-		set BUILD_VS_YEAR=2017
+	) else if "%1" == "2022b" (
+		set BUILD_VS_YEAR=2022
 		set VSWHERE_ARGS=-products Microsoft.VisualStudio.Product.BuildTools
 	) else if "%1" == "2019" (
 		set BUILD_VS_YEAR=2019
@@ -63,6 +61,14 @@ if NOT "%1" == "" (
 		set VSWHERE_ARGS=-prerelease
 	) else if "%1" == "2019b" (
 		set BUILD_VS_YEAR=2019
+		set VSWHERE_ARGS=-products Microsoft.VisualStudio.Product.BuildTools
+	) else if "%1" == "2017" (
+		set BUILD_VS_YEAR=2017
+	) else if "%1" == "2017pre" (
+		set BUILD_VS_YEAR=2017
+		set VSWHERE_ARGS=-prerelease
+	) else if "%1" == "2017b" (
+		set BUILD_VS_YEAR=2017
 		set VSWHERE_ARGS=-products Microsoft.VisualStudio.Product.BuildTools
 	) else if "%1" == "2015" (
 		set BUILD_VS_YEAR=2015
@@ -86,10 +92,12 @@ if NOT "%1" == "" (
 		set VERBOSE=1
 	) else (
 		echo Command "%1" unknown, aborting!
-		exit /b 1
+		goto ERR
 	)
 	shift /1
 	goto argv_loop
 )
 :EOF
 exit /b 0
+:ERR
+exit /b 1
